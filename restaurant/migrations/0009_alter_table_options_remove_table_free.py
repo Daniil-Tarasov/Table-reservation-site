@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('restaurant', '0008_reservation_reminder_sent'),
+        ("restaurant", "0008_reservation_reminder_sent"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='table',
-            options={'ordering': ['number'], 'verbose_name': 'Столик', 'verbose_name_plural': 'Столики'},
+            name="table",
+            options={"ordering": ["number"], "verbose_name": "Столик", "verbose_name_plural": "Столики"},
         ),
         migrations.RemoveField(
-            model_name='table',
-            name='free',
+            model_name="table",
+            name="free",
         ),
     ]

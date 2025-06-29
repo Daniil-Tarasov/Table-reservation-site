@@ -5,14 +5,14 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class User(AbstractUser):
     username = None
-    email = models.EmailField(unique=True, verbose_name='Email')
-    phone_number = PhoneNumberField(verbose_name='Номер телефона', blank=True, null=True)
+    email = models.EmailField(unique=True, verbose_name="Email")
+    phone_number = PhoneNumberField(verbose_name="Номер телефона", blank=True, null=True)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return f'{self.email}'
+        return f"{self.email}"
 
     class Meta:
         verbose_name = "Пользователь"

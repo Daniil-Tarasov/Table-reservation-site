@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('restaurant', '0007_alter_table_image_alter_worker_avatar'),
+        ("restaurant", "0007_alter_table_image_alter_worker_avatar"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='reservation',
-            name='reminder_sent',
-            field=models.BooleanField(default=False, verbose_name='Напоминание отправлено'),
+            model_name="reservation",
+            name="reminder_sent",
+            field=models.BooleanField(default=False, verbose_name="Напоминание отправлено"),
         ),
     ]

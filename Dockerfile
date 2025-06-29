@@ -2,7 +2,7 @@ FROM python:3.12-slim
 
 RUN pip install poetry
 
-WORKDIR /table-reservation-site
+WORKDIR /code
 
 COPY README.md .
 
@@ -12,9 +12,9 @@ RUN poetry install --no-interaction --no-root
 
 COPY . .
 
-RUN mkdir -p /table-reservation-site/media/restaurant/images
+RUN mkdir -p /code/media/restaurant/images
 
-RUN mkdir -p /table-reservation-site/media/restaurant/workers/images
+RUN mkdir -p /code/media/restaurant/workers/images
 
 EXPOSE 8000
 

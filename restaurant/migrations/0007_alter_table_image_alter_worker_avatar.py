@@ -7,18 +7,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('restaurant', '0006_alter_table_cropping_alter_worker_cropping'),
+        ("restaurant", "0006_alter_table_cropping_alter_worker_cropping"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='table',
-            name='image',
-            field=image_cropping.fields.ImageCropField(blank=True, null=True, upload_to='restaurant/images', verbose_name='Изображение столика'),
+            model_name="table",
+            name="image",
+            field=image_cropping.fields.ImageCropField(
+                blank=True, null=True, upload_to="restaurant/images", verbose_name="Изображение столика"
+            ),
         ),
         migrations.AlterField(
-            model_name='worker',
-            name='avatar',
-            field=image_cropping.fields.ImageCropField(blank=True, null=True, upload_to='restaurant/workers/images', verbose_name='Фото сотрудника'),
+            model_name="worker",
+            name="avatar",
+            field=image_cropping.fields.ImageCropField(
+                blank=True, null=True, upload_to="restaurant/workers/images", verbose_name="Фото сотрудника"
+            ),
         ),
     ]

@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('restaurant', '0002_reservation_comment'),
+        ("restaurant", "0002_reservation_comment"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='table',
-            name='image',
-            field=models.ImageField(null=True, upload_to='restaurant/images', verbose_name='Изображение столика'),
+            model_name="table",
+            name="image",
+            field=models.ImageField(null=True, upload_to="restaurant/images", verbose_name="Изображение столика"),
         ),
         migrations.AddField(
-            model_name='table',
-            name='number',
-            field=models.PositiveIntegerField(null=True, verbose_name='Номер столика'),
+            model_name="table",
+            name="number",
+            field=models.PositiveIntegerField(null=True, verbose_name="Номер столика"),
         ),
     ]

@@ -15,31 +15,48 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Table',
+            name="Table",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('number_of_seats', models.PositiveSmallIntegerField(verbose_name='Количество мест')),
-                ('free', models.BooleanField(default=True, verbose_name='Доступность столика')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("number_of_seats", models.PositiveSmallIntegerField(verbose_name="Количество мест")),
+                ("free", models.BooleanField(default=True, verbose_name="Доступность столика")),
             ],
             options={
-                'verbose_name': 'Столик',
-                'verbose_name_plural': 'Столики',
-                'ordering': ['free'],
+                "verbose_name": "Столик",
+                "verbose_name_plural": "Столики",
+                "ordering": ["free"],
             },
         ),
         migrations.CreateModel(
-            name='Reservation',
+            name="Reservation",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField(verbose_name='Дата, на которую забронирован столик')),
-                ('time', models.TimeField(verbose_name='Время, на которое забронирован столик')),
-                ('owner', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='reservation', to=settings.AUTH_USER_MODEL, verbose_name='Гость')),
-                ('table', models.OneToOneField(null=True, on_delete=django.db.models.deletion.SET_NULL, to='restaurant.table', verbose_name='Забронированный столик')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("date", models.DateField(verbose_name="Дата, на которую забронирован столик")),
+                ("time", models.TimeField(verbose_name="Время, на которое забронирован столик")),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="reservation",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Гость",
+                    ),
+                ),
+                (
+                    "table",
+                    models.OneToOneField(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="restaurant.table",
+                        verbose_name="Забронированный столик",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Бронь',
-                'verbose_name_plural': 'Брони',
-                'ordering': ['date'],
+                "verbose_name": "Бронь",
+                "verbose_name_plural": "Брони",
+                "ordering": ["date"],
             },
         ),
     ]

@@ -1,4 +1,4 @@
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 
 from celery import shared_task
 from django.core.mail import send_mail
@@ -10,8 +10,8 @@ from restaurant.models import Reservation
 
 @shared_task
 def send_mail_feedback(email, message):
-    subject = 'Обратная связь с сайта'
-    body = f'От: {email}\n\nСообщение:\n{message}'
+    subject = "Обратная связь с сайта"
+    body = f"От: {email}\n\nСообщение:\n{message}"
     send_mail(
         subject,
         body,
@@ -42,6 +42,7 @@ def check_reservation():
 
         if timezone.is_aware(now):
             from django.utils.timezone import make_aware
+
             reservation_datetime = make_aware(reservation_datetime, timezone.get_current_timezone())
 
         if now - reservation_datetime > timedelta(minutes=30):

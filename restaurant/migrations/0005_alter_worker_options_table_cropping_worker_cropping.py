@@ -7,22 +7,42 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('restaurant', '0004_worker_reservation_is_active_alter_reservation_owner_and_more'),
+        ("restaurant", "0004_worker_reservation_is_active_alter_reservation_owner_and_more"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='worker',
-            options={'ordering': ['id'], 'verbose_name': 'Сотрудник', 'verbose_name_plural': 'Сотрудники'},
+            name="worker",
+            options={"ordering": ["id"], "verbose_name": "Сотрудник", "verbose_name_plural": "Сотрудники"},
         ),
         migrations.AddField(
-            model_name='table',
-            name='cropping',
-            field=image_cropping.fields.ImageRatioField('image', '0x0', adapt_rotation=False, allow_fullsize=False, free_crop=False, help_text=None, hide_image_field=False, size_warning=False, verbose_name='cropping'),
+            model_name="table",
+            name="cropping",
+            field=image_cropping.fields.ImageRatioField(
+                "image",
+                "0x0",
+                adapt_rotation=False,
+                allow_fullsize=False,
+                free_crop=False,
+                help_text=None,
+                hide_image_field=False,
+                size_warning=False,
+                verbose_name="cropping",
+            ),
         ),
         migrations.AddField(
-            model_name='worker',
-            name='cropping',
-            field=image_cropping.fields.ImageRatioField('avatar', '0x0', adapt_rotation=False, allow_fullsize=False, free_crop=False, help_text=None, hide_image_field=False, size_warning=False, verbose_name='cropping'),
+            model_name="worker",
+            name="cropping",
+            field=image_cropping.fields.ImageRatioField(
+                "avatar",
+                "0x0",
+                adapt_rotation=False,
+                allow_fullsize=False,
+                free_crop=False,
+                help_text=None,
+                hide_image_field=False,
+                size_warning=False,
+                verbose_name="cropping",
+            ),
         ),
     ]

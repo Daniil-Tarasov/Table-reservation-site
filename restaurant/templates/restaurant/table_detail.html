@@ -12,7 +12,11 @@
                         <h3>Столик № {{ object.number }}</h3>
                     </div>
                     <div class="card-body">
-                        <p><img src="{{ object.image.url }}" class="img" style="width: 370px" alt="Столик №{{ object.number }}"></p>
+                        {% if object.image %}
+                            <p><img src="{{ object.image.url }}" class="img" style="width: 370px" alt="Столик №{{ object.number }}"></p>
+                        {% else %}
+                            <p>Изображение отсутствует</p>
+                        {% endif %}
                         <p>Количество мест: {{ object.number_of_seats }}</p>
                         <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
                             <div class="dropend mb-2">

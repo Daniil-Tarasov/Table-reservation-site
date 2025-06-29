@@ -7,18 +7,38 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('restaurant', '0005_alter_worker_options_table_cropping_worker_cropping'),
+        ("restaurant", "0005_alter_worker_options_table_cropping_worker_cropping"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='table',
-            name='cropping',
-            field=image_cropping.fields.ImageRatioField('image', '0x0', adapt_rotation=False, allow_fullsize=False, free_crop=True, help_text=None, hide_image_field=False, size_warning=False, verbose_name='cropping'),
+            model_name="table",
+            name="cropping",
+            field=image_cropping.fields.ImageRatioField(
+                "image",
+                "0x0",
+                adapt_rotation=False,
+                allow_fullsize=False,
+                free_crop=True,
+                help_text=None,
+                hide_image_field=False,
+                size_warning=False,
+                verbose_name="cropping",
+            ),
         ),
         migrations.AlterField(
-            model_name='worker',
-            name='cropping',
-            field=image_cropping.fields.ImageRatioField('avatar', '0x0', adapt_rotation=False, allow_fullsize=False, free_crop=True, help_text=None, hide_image_field=False, size_warning=False, verbose_name='cropping'),
+            model_name="worker",
+            name="cropping",
+            field=image_cropping.fields.ImageRatioField(
+                "avatar",
+                "0x0",
+                adapt_rotation=False,
+                allow_fullsize=False,
+                free_crop=True,
+                help_text=None,
+                hide_image_field=False,
+                size_warning=False,
+                verbose_name="cropping",
+            ),
         ),
     ]

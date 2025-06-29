@@ -12,13 +12,13 @@ def send_mail_reservation_reminder():
     reservations = Reservation.objects.filter(date=today, is_active=True, reminder_sent=False)
 
     for reservation in reservations:
-        subject = 'У ВАС ЗАРЕЗЕРВИРОВАН СТОЛИК!!!'
+        subject = "У ВАС ЗАРЕЗЕРВИРОВАН СТОЛИК!!!"
         message = (
-            f'Здравствуйте, {reservation.owner.get_full_name()}!\n\n'
-            f'У вас зарезервирован столик №{reservation.table.number}.\n'
-            f'Дата бронирования: {reservation.date}.\n'
-            f'Время бронирования: {reservation.time}.\n\n'
-            'Спасибо, что выбрали нас!'
+            f"Здравствуйте, {reservation.owner.get_full_name()}!\n\n"
+            f"У вас зарезервирован столик №{reservation.table.number}.\n"
+            f"Дата бронирования: {reservation.date}.\n"
+            f"Время бронирования: {reservation.time}.\n\n"
+            "Спасибо, что выбрали нас!"
         )
 
         send_mail(
@@ -30,5 +30,5 @@ def send_mail_reservation_reminder():
         )
 
         reservation.reminder_sent = True
-        reservation.save(update_fields=['reminder_sent'])
+        reservation.save(update_fields=["reminder_sent"])
         print(f"Reminder sent flag updated for reservation {reservation.pk}")

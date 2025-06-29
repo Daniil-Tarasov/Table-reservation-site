@@ -2,24 +2,24 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView
 
 from restaurant.models import Reservation
-from users.forms import UserRegisterForm, UserForm
+from users.forms import UserForm, UserRegisterForm
 from users.models import User
 
 
 class UserCreateView(CreateView):
     model = User
-    template_name = 'users/register.html'
+    template_name = "users/register.html"
     form_class = UserRegisterForm
-    success_url = reverse_lazy('restaurant:home')
+    success_url = reverse_lazy("restaurant:home")
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
-    template_name = 'users/user_detail.html'
+    template_name = "users/user_detail.html"
     paginate_by = 5
 
     def get_object(self, queryset=None):
@@ -32,19 +32,19 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
 
-        user_reservations = Reservation.objects.filter(owner=user).order_by('date', 'time')
+        user_reservations = Reservation.objects.filter(owner=user).order_by("date", "time")
 
         paginator = Paginator(user_reservations, self.paginate_by)
-        page_number = self.request.GET.get('page')
+        page_number = self.request.GET.get("page")
         page_obj = paginator.get_page(page_number)
 
-        context['page_obj'] = page_obj
+        context["page_obj"] = page_obj
         return context
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
-    template_name = 'users/user_form.html'
+    template_name = "users/user_form.html"
     form_class = UserForm
 
     def get_success_url(self):
