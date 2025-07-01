@@ -2,14 +2,8 @@ from django.urls import path
 
 from . import views
 from .apps import RestaurantConfig
-from .views import (
-    ReservationDeleteView,
-    ReservationListView,
-    ReservationUpdateView,
-    ReservationView,
-    TableDetailView,
-    WorkerListView,
-)
+from .views import (ReservationDeleteView, ReservationListView, ReservationUpdateView, ReservationView,
+                    TableDetailView, WorkerListView)
 
 app_name = RestaurantConfig.name
 

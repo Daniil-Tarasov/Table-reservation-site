@@ -5,7 +5,6 @@ services:
     volumes:
       - .:/code
       - ./media:/code/media
-      - static_volume:/code/static
     ports:
       - '8000:8000'
     depends_on:
@@ -59,4 +58,3 @@ services:
 volumes:
   postgres_data:
   redis_data:
-  static_volume:

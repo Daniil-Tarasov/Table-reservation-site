@@ -1,6 +1,3 @@
-# from datetime import date, datetime
-#
-# from bootstrap_datepicker_plus.widgets import DatePickerInput, TimePickerInput
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
@@ -57,26 +54,6 @@ class ReservationForm(ModelForm):
                 raise ValidationError(f"Столик {table.number} уже забронирован на выбранное время и дату.")
 
         return cleaned_data
-
-        # widgets = {
-        #     'date': DatePickerInput(
-        #         options={
-        #             "format": "YYYY-MM-DD",
-        #             "minDate": "moment",  # ограничение от текущей даты
-        #             "useCurrent": True,
-        #         },
-        #         attrs={'class': 'form-control'}
-        #     ),
-        #     'time': TimePickerInput(
-        #         options={
-        #             "format": "HH:mm",
-        #             "stepping": 30,  # шаг 30 минут
-        #         },
-        #         attrs={'class': 'form-control'}
-        #     ),
-        #     'table': forms.Select(attrs={'class': 'form-control'}),
-        #     'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
-        # }
 
 
 class ReservationAdminForm(ModelForm):

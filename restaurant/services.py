@@ -5,6 +5,41 @@ from django.urls import reverse
 from .tasks import send_reservation_email
 
 
+def generate_new_reservation_body(reservation, url, name):
+    return (
+        f"НОВЫЙ РЕЗЕРВ!\n\n"
+        f"Дата: {reservation.date}\n"
+        f"Время: {reservation.time}\n"
+        f"Гость: {name} - {reservation.owner}\n"
+        f"Столик №{reservation.table}\n"
+        f"Комментарий: {reservation.comment}\n"
+        f"Ссылка для подтверждения: {url}"
+    )
+
+
+def generate_updated_reservation_body(reservation, url, name):
+    return (
+        f"ИЗМЕНЕНИЕ РЕЗЕРВА!\n\n"
+        f"Дата: {reservation.date}\n"
+        f"Время: {reservation.time}\n"
+        f"Гость: {name} - {reservation.owner}\n"
+        f"Столик №{reservation.table}\n"
+        f"Комментарий: {reservation.comment}\n"
+        f"Ссылка для подтверждения: {url}"
+    )
+
+
+def generate_deleted_reservation_body(reservation, name):
+    return (
+        f"ОТМЕНА РЕЗЕРВА!\n\n"
+        f"Дата: {reservation.date}\n"
+        f"Время: {reservation.time}\n"
+        f"Гость: {name} - {reservation.owner}\n"
+        f"Столик №{reservation.table}\n"
+        f"Комментарий: {reservation.comment}\n"
+    )
+
+
 def build_reservation_mail(reservation, action, request=None):
     relative_url = reverse("restaurant:reservation_update", args=[reservation.pk])
     url = request.build_absolute_uri(relative_url) if request else relative_url
@@ -12,38 +47,15 @@ def build_reservation_mail(reservation, action, request=None):
 
     if action == "created":
         subject = "НОВЫЙ РЕЗЕРВ!!!"
-        body = (
-            f"НОВЫЙ РЕЗЕРВ!\n\n"
-            f"Дата: {reservation.date}\n"
-            f"Время: {reservation.time}\n"
-            f"Гость: {name} - {reservation.owner}\n"
-            f"Столик №{reservation.table}\n"
-            f"Комментарий: {reservation.comment}\n"
-            f"Ссылка для подтверждения: {url}"
-        )
+        body = generate_new_reservation_body(reservation, url, name)
 
     elif action == "updated":
         subject = "ИЗМЕНЕНИЕ РЕЗЕРВА!!!"
-        body = (
-            f"ИЗМЕНЕНИЯ РЕЗЕРВА!\n\n"
-            f"Дата: {reservation.date}\n"
-            f"Время: {reservation.time}\n"
-            f"Гость: {name} - {reservation.owner}\n"
-            f"Столик №{reservation.table}\n"
-            f"Комментарий: {reservation.comment}\n"
-            f"Ссылка для подтверждения: {url}"
-        )
+        body = generate_updated_reservation_body(reservation, url, name)
 
     elif action == "deleted":
         subject = "РЕЗЕРВ БЫЛ ОТМЕНЁН!!!"
-        body = (
-            f"ОТМЕНА РЕЗЕРВА!\n\n"
-            f"Дата: {reservation.date}\n"
-            f"Время: {reservation.time}\n"
-            f"Гость: {name} - {reservation.owner}\n"
-            f"Столик №{reservation.table}\n"
-            f"Комментарий: {reservation.comment}\n"
-        )
+        body = generate_deleted_reservation_body(reservation, name)
 
     else:
         subject = body = None
@@ -52,7 +64,7 @@ def build_reservation_mail(reservation, action, request=None):
 
 
 def send_reservation_notification(reservation, action, user=None, request=None):
-    if user and user.pk != reservation.owner.pk:
+    if user and user.id != reservation.owner_id:
         return
 
     subject, body = build_reservation_mail(reservation, action, request=request)

@@ -4,11 +4,9 @@ RUN pip install poetry
 
 WORKDIR /code
 
-COPY README.md .
-
 COPY pyproject.toml poetry.lock* ./
 
-RUN poetry install --no-interaction --no-root
+RUN poetry install --no-interaction --no-root --only main
 
 COPY . .
 

@@ -45,7 +45,7 @@ class ReservationView(View):
     template_name = "restaurant/reservation.html"
 
     def get(self, request):
-        tables = Table.objects.all().order_by("number")
+        tables = Table.objects.order_by("number")
         table_id = request.GET.get("table_id")
         if table_id:
             form = ReservationForm(initial={"table": table_id})
