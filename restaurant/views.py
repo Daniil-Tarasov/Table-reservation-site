@@ -13,9 +13,10 @@ from django.views.generic import DeleteView, DetailView, ListView, UpdateView
 
 from restaurant.forms import ReservationAdminForm, ReservationForm
 from restaurant.models import Reservation, Table, Worker
-from restaurant.services import round_time_to_next_slot, send_reservation_notification
+from restaurant.services import send_reservation_notification
 
 from .tasks import send_mail_feedback
+from .utils import round_time_to_next_slot
 
 
 def home(request):
