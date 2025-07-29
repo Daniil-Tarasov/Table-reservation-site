@@ -33,6 +33,20 @@ def send_reservation_email(subject, body):
 
 
 @shared_task
+def send_new_user_email(email, password):
+    send_mail(
+        subject="Резерв успешно создан!",
+        message=f"Вы успешно зарезервировали столик в нашем ресторане! Теперь вам доступен личный кабинет.\n"
+        f"Для входа используйте пароль {password}\n"
+        f"Пароль можно изменить.\n\n"
+        f"Ждём вас с нетерпением! Хорошего дня!",
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[email],
+        fail_silently=False
+    )
+
+
+@shared_task
 def check_reservation():
     today = timezone.localdate()
     now = timezone.now()

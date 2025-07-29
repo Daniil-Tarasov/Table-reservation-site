@@ -1,10 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordResetView
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView
 
+from config import settings
 from restaurant.models import Reservation
 from users.forms import UserForm, UserRegisterForm
 from users.models import User
@@ -55,3 +57,11 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         if user == self.object:
             return UserForm
         raise PermissionDenied
+
+
+class PasswordResetUserView(PasswordResetView):
+    template_name = "users/reset_password.html"
+    email_template_name = "users/password_reset_email.html"
+    subject_template_name = "users/password_reset_subject.txt"
+    from_email = settings.DEFAULT_FROM_EMAIL
+    success_url = reverse_lazy("users:password_reset_done")

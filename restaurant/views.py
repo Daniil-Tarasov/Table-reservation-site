@@ -1,5 +1,6 @@
 from datetime import datetime, time, timedelta
 
+from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render
@@ -14,9 +15,10 @@ from django.views.generic import DeleteView, DetailView, ListView, UpdateView
 from restaurant.forms import ReservationAdminForm, ReservationForm
 from restaurant.models import Reservation, Table, Worker
 from restaurant.services import send_reservation_notification
+from users.models import User
 
-from .tasks import send_mail_feedback
-from .utils import round_time_to_next_slot
+from .tasks import send_mail_feedback, send_new_user_email
+from .utils import round_time_to_next_slot, create_user
 
 
 def home(request):
@@ -55,17 +57,28 @@ class ReservationView(View):
         return render(request, self.template_name, {"tables": tables, "form": form})
 
     def post(self, request):
-        if not request.user.is_authenticated:
-            return redirect("users:login")
 
         tables = Table.objects.all().order_by("number")
         form = ReservationForm(request.POST)
         if form.is_valid():
             reservation = form.save(commit=False)
-            reservation.owner = request.user
+            if request.user.is_authenticated:
+                reservation.owner = request.user
+            else:
+                email = form.cleaned_data.get("email")
+                user = User.objects.filter(email=email).first()
+                if not user:
+                    user, password = create_user(email)
+                    send_new_user_email(email, password)
+                login(request, user)
+                reservation.owner = user
+                logout(request)
+
             reservation.save()
-            send_reservation_notification(reservation, action="created", user=request.user, request=request)
+            send_reservation_notification(reservation, action="created", user=reservation.owner, request=request)
+
             return redirect("restaurant:reservation_success")
+
         return render(request, self.template_name, {"tables": tables, "form": form})
 
 

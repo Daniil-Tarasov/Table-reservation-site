@@ -1,6 +1,10 @@
+import random
+import string
 from datetime import timedelta
 
 from django.urls import reverse
+
+from users.models import User
 
 
 def generate_new_reservation_body(reservation, url, name):
@@ -70,3 +74,14 @@ def round_time_to_next_slot(dt):
     else:
         dt = dt.replace(minute=0, second=0, microsecond=0)
         return dt + timedelta(hours=1)
+
+
+def create_user(email):
+    password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+    user = User.objects.create(
+        email=email,
+        is_active=True,
+    )
+    user.set_password(password)
+    user.save()
+    return user, password

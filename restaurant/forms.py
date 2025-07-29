@@ -6,6 +6,15 @@ from restaurant.models import Reservation, Table
 
 
 class ReservationForm(ModelForm):
+    email = forms.EmailField(
+        label="Почта",
+        widget=forms.EmailInput(attrs={
+            "class": "form-control",
+            "placeholder": "Введите вашу почту"
+        }),
+        required=True,
+    )
+
     table = forms.ModelChoiceField(
         queryset=Table.objects.all(),
         empty_label="Выберите столик",
